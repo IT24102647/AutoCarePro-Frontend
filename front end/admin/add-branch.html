@@ -21,8 +21,8 @@
       <ul>
         <li><a href="admin.html">Dashboard</a></li>
         <li><a href="service-records.html">Service Record</a></li>
-        <li><a href="branchManagement.html">Garage Management</a></li>
-        <li><a href="serviceManage.html" class="active">Service Management</a></li>
+        <li><a href="branchManagement.html" class="active">Garage Management</a></li>
+        <li><a href="serviceManage.html">Service Management</a></li>
         <li><a href="userManagement.html">User Management</a></li>
         <li><a href="../index/index.html">Logout</a></li>
       </ul>
@@ -32,50 +32,52 @@
 
 <main class="container">
   <section>
-    <h1>Add New Service</h1>
+    <h1>Add New Branch</h1>
 
     <form action="#" method="post" novalidate>
+      <!-- inside <form> … -->
       <div class="form-group">
-        <label for="serviceName">Service Name</label>
+        <label for="branchId">Branch ID</label>
         <input type="text"
-               id="serviceName"
-               name="serviceName"
+               id="branchId"
+               name="branchId"
+               pattern="^[A-Za-z0-9_-]{3,20}$"
+               title="3–20 letters, numbers, dashes or underscores"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="branchName">Branch Name</label>
+        <input type="text"
+               id="branchName"
+               name="branchName"
                required
                autocomplete="off">
       </div>
 
       <div class="form-group">
-        <label for="serviceDescription">Description</label>
+        <label for="location">Location</label>
         <input type="text"
-               id="serviceDescription"
-               name="serviceDescription"
+               id="location"
+               name="location"
                required
                autocomplete="off">
       </div>
 
       <div class="form-group">
-        <label for="timeRequired">Time Required (e.g..2h 30min)</label>
+        <label for="managerName">Manager Name</label>
         <input type="text"
-               id="timeRequired"
-               name="timeRequired"
-               pattern="^\\d+\\s*(h|hr|hrs|hour|hours)(\\s*\\d+\\s*(m|min|mins|minute|minutes))?$"
-               title="Example: 2 hr 30 min"
+               id="managerName"
+               name="managerName"
+               pattern="^[A-Za-z\\s.'-]{3,40}$"
+               title="Letters only, 3–40chars"
                required>
       </div>
 
-      <div class="form-group">
-        <label for="price">Price (LKR)</label>
-        <input type="number"
-               id="price"
-               name="price"
-               min="0"
-               step="0.01"
-               required>
-      </div>
 
       <button type="submit" class="btn admin-link">
         <i class="fas fa-save" aria-hidden="true"></i>
-        Save Service
+        Save Branch
       </button>
     </form>
   </section>
