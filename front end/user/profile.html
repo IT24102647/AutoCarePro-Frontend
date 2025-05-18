@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Garage | AutoCare Pro</title>
+    <link rel="stylesheet" href="../assets/css/styles2.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
+          <div class="logo-text">
+            Auto
+            <span>Care</span>
+            Pro
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html" >Home</a></li>
+            <li><a href="vehicle.html">My Vehicle</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="profile.html" class="active">Profile</a></li>
+            <li><a href="../index/index.html">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="garage-header">
+        <h1>My Profile</h1>
+      </div>
+
+      <div id="message" style="display: none"></div>
+
+      <div class="table-container">
+        <div class="filter-options">
+          <label for="vehicleFilter">Filter by Vehicle:</label>
+          <select id="vehicleFilter">
+            <option value="all">All Vehicles</option>
+            <!-- Will be populated by JavaScript -->
+          </select>
+
+          <label for="dateFilter">Filter by Date:</label>
+          <select id="dateFilter">
+            <option value="all">All Dates</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
+          </select>
+        </div>
+
+        <table id="historyTable">
+          <thead>
+          <tr>
+            <th>Date</th>
+            <th>Vehicle</th>
+            <th>Service</th>
+            <th>Cost</th>
+            <th>Status</th>
+            <th>Details</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- Will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+      <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div>
+            <h3>Contact Us</h3>
+            <p>123 Rajapihilla Rd, Kurunegala</p>
+            <p>(037) 2640-640</p>
+            <p>support@autocarepro.com</p>
+          </div>
+          <div>
+            <h3>Quick Links</h3>
+            <p><a href="index.html" >Home</a></p>
+            <p><a href="vehicle.html">My Vehicle</a></p>
+            <p><a href="schedule.html">Schedule</a></p>
+            <p><a href="services.html">Services</a></p>
+            <p><a href="profile.html">Profile</a></p>
+            <p><a href="../index/index.html">Logout</a></p>
+          </div>
+        </div>
+        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+      </div>
+    </footer>
+  <script src="../assets/js/garage.js"></script>
+    <script src="../assets/js/auth.js"></script>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management | AutoCare Pro</title>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
+          <div class="logo-text">
+            Auto
+            <span>Care</span>
+            Pro
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="admin.html">Dashboard</a></li>
+            <li><a href="service-records.html">Service Record</a></li>
+            <li><a href="serviceManage.html" >Service Management</a></li>
+            <li><a href="userManagement.html" class="active">User Management</a></li>
+            <li><a href="../index/index.html">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>User Management</h1>
+
+      <div id="message" style="display: none; margin-bottom: 20px"></div>
+
+      <div class="table-actions">
+        <a href="add-user.html" class="btn">Add New User</a>
+      </div>
+
+      <div class="table-container">
+        <table id="usersTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Admin</th>
+              <th>Registered</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Users will load here by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- User Modal -->
+    <div id="userModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle">
+      <div class="modal-content">
+        <span class="close" role="button" aria-label="Close modal" tabindex="0">&times;</span>
+        <h2 id="userModalTitle">Edit User</h2>
+        <form id="userForm">
+          <input type="hidden" id="userId" />
+          <div class="form-group">
+            <label for="userName">Full Name</label>
+            <input type="text" id="userName" required />
+          </div>
+          <div class="form-group">
+            <label for="userEmail">Email</label>
+            <input type="email" id="userEmail" required />
+          </div>
+          <div class="form-group">
+            <label for="userPhone">Phone</label>
+            <input type="tel" id="userPhone" required pattern="^\+?[0-9]{7,15}$" title="Enter a valid phone number." />
+          </div>
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input type="password" id="userPassword" />
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="userIsAdmin" />
+              Admin Privileges
+            </label>
+          </div>
+          <button type="submit" class="btn">Save User</button>
+        </form>
+      </div>
+    </div>
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div>
+            <h3>Contact Us</h3>
+            <p>123 Rajapihilla Rd, Kurunegala</p>
+            <p>(037) 2640-640</p>
+            <p>support@autocarepro.com</p>
+          </div>
+          <div>
+            <h3>Quick Links</h3>
+            <p><a href="admin.html" class="active">Dashboard</a></p>
+            <p><a href="service-records.html">Service Record</a></p>
+            <p><a href="serviceManage.html">Service Management</a></p>
+            <p><a href="userManagement.html">User Management</a></p>
+            <p><a href="../index/index.html" >Logout</a></p>
+          </div>
+        </div>
+        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="../assets/js/user.js"></script>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | AutoCare Pro</title>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
+          <div class="logo-text">
+            Auto
+            <span>Care</span>
+            Pro
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="register.html" class="active admin-link">Register</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="auth-section">
+        <h2>Create Your Account</h2>
+        <div id="registerMessage" style="display: none; padding: 15px; margin-bottom: 20px; border-radius: 6px"></div>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required />
+          </div>
+          <button type="submit" class="btn">Register</button>
+          <p style="text-align: center; margin-top: 20px">
+            Already have an account?
+            <a href="login.html">Login here</a>
+          </p>
+        </form>
+      </section>
+    </main>
+
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div>
+            <h3>Contact Us</h3>
+            <p>123 Rajapihilla Rd, Kurunegala</p>
+            <p>(037) 2640-640</p>
+            <p>support@autocarepro.com</p>
+          </div>
+          <div>
+            <h3>Quick Links</h3>
+            <p><a href="index.html" >Home</a></p>
+            <p><a href="services.html">Services</a></p>
+            <p><a href="login.html">Login</a></p>
+            <p><a href="register.html">Register</a></p>
+          </div>
+        </div>
+        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="../assets/js/register.js"></script>
+  </body>
+</html>
