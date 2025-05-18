@@ -65,8 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Error:", error);
             });
 
-
         showMessage("Registration successful! Redirecting to login...", "success");
+
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 1500);
 
     });
 
