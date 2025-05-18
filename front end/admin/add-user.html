@@ -1,88 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Add User | AutoCare Pro</title>
-    <link rel="stylesheet" href="../assets/css/styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  </head>
+    <link rel="stylesheet" href="../assets/css/styles.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+</head>
 
-  <body>
-    <header>
-      <div class="header-container">
+<body>
+<header>
+    <div class="header-container">
         <div class="logo">
-          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
-          <div class="logo-text">
-            Auto
-            <span>Care</span>
-            Pro
-          </div>
+            <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo"/>
+            <div class="logo-text">
+                Auto
+                <span>Care</span>
+                Pro
+            </div>
         </div>
         <nav>
-          <ul>
-            <li><a href="admin.html">Dashboard</a></li>
-            <li><a href="service-records.html">Service Record</a></li>
-            <li><a href="branchManagement.html">Garage Management</a></li>
-            <li><a href="serviceManage.html">Service Management</a></li>
-            <li><a href="userManagement.html" class="active">User Management</a></li>
-            <li><a href="../index/index.html">Logout</a></li>
-          </ul>
+            <ul>
+                <li><a href="admin.html">Dashboard</a></li>
+                <li><a href="service-records.html">Service Record</a></li>
+                <li><a href="branchManagement.html">Garage Management</a></li>
+                <li><a href="serviceManage.html">Service Management</a></li>
+                <li><a href="userManagement.html" class="active">User Management</a></li>
+                <li><a href="../index/index.html">Logout</a></li>
+            </ul>
         </nav>
-      </div>
-    </header>
+    </div>
+</header>
 
-    <main class="container">
-      <h1>Add New User</h1>
+<main class="container">
+    <h1>Add New Admin 1</h1>
 
-      <div id="message" class="hidden message-box"></div>
+    <div id="message" class="hidden message-box"></div>
 
-      <form id="addUserForm" class="user-form">
+    <form id="addUserForm" class="user-form">
         <div class="form-group">
-          <label for="userName">Full Name</label>
-          <input type="text" id="userName" required />
+            <label for="userName">Full Name</label>
+            <input type="text" id="userName" required/>
         </div>
         <div class="form-group">
-          <label for="userEmail">Email</label>
-          <input type="email" id="userEmail" required />
+            <label for="userEmail">Email</label>
+            <input type="email" id="userEmail" required/>
         </div>
         <div class="form-group">
-          <label for="userPhone">Phone</label>
-          <input type="tel" id="userPhone" required pattern="^\+?[0-9]{7,15}$" title="Enter a valid phone number." />
+            <label for="userPhone">Phone</label>
+            <input type="tel" id="userPhone" required pattern="^\+?[0-9]{7,15}$" title="Enter a valid phone number."/>
         </div>
         <div class="form-group">
-          <label for="userPassword">Password</label>
-          <input type="password" id="userPassword" required />
+            <label for="userPassword">Password</label>
+            <input type="password" id="userPassword" required/>
         </div>
         <button type="submit" class="btn">Create User</button>
         <a href="userManagement.html" class="btn secondary">Cancel</a>
-      </form>
-    </main>
-     <footer>
-      <div class="container">
+    </form>
+</main>
+<footer>
+    <div class="container">
         <div class="footer-content">
-          <div>
-            <h3>Contact Us</h3>
-            <p>123 Rajapihilla Rd, Kurunegala</p>
-            <p>(037) 2640-640</p>
-            <p>support@autocarepro.com</p>
-          </div>
-          <div>
-            <h3>Quick Links</h3>
-            <p><a href="admin.html" class="active">Dashboard</a></p>
-            <p><a href="service-records.html">Service Record</a></p>
-            <p><a href="branchManagement.html">Garage Management</a></p>
-            <p><a href="serviceManage.html">Service Management</a></p>
-            <p><a href="userManagement.html">User Management</a></p>
-            <p><a href="../index/index.html" >Logout</a></p>
-          </div>
+            <div>
+                <h3>Contact Us</h3>
+                <p>123 Rajapihilla Rd, Kurunegala</p>
+                <p>(037) 2640-640</p>
+                <p>support@autocarepro.com</p>
+            </div>
+            <div>
+                <h3>Quick Links</h3>
+                <p><a href="admin.html" class="active">Dashboard</a></p>
+                <p><a href="service-records.html">Service Record</a></p>
+                <p><a href="branchManagement.html">Garage Management</a></p>
+                <p><a href="serviceManage.html">Service Management</a></p>
+                <p><a href="userManagement.html">User Management</a></p>
+                <p><a href="../index/index.html">Logout</a></p>
+            </div>
         </div>
         <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
-      </div>
-    </footer>
+    </div>
+</footer>
 
-    <script>
-      document.getElementById("addUserForm").addEventListener("submit", function (e) {
+<script>
+    document.getElementById("addUserForm").addEventListener("submit", function (e) {
         e.preventDefault();
 
         const name = document.getElementById("userName").value.trim();
@@ -92,16 +92,35 @@
         const isAdmin = document.getElementById("userIsAdmin").checked;
 
         const newUser = {
-          id: Date.now(),
-          name,
-          email,
-          phone,
-          password,
-          isAdmin,
-          registered: new Date().toISOString().split("T")[0],
-        };
+            id: 0,
+            name,
+            email,
+            phone,
+            password,
+            role:"Admin",
 
-        // Example: Store in localStorage or send via fetch()
+        };
+        console.log(newUser);
+
+        fetch("http://localhost:8080/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUser),
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+            .then((data) => {
+                console.log("Success:", data);
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+
         console.log("New user created:", newUser);
 
         // Show confirmation
@@ -112,9 +131,9 @@
 
         // Optional: Redirect
         setTimeout(() => {
-          window.location.href = "user.html";
+            window.location.href = "user.html";
         }, 1500);
-      });
-    </script>
-  </body>
+    });
+</script>
+</body>
 </html>
