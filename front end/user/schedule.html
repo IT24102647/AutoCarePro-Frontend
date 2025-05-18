@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Service Schedule | AutoCare Pro</title>
+    <link rel="stylesheet" href="../assets/css/styles2.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
+          <div class="logo-text">
+            Auto
+            <span>Care</span>
+            Pro
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="index.html" >Home</a></li>
+            <li><a href="vehicle.html">My Vehicle</a></li>
+            <li><a href="schedule.html" class="active">Schedule</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="profile.html" >Profile</a></li>
+            <li><a href="../index/index.html">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Upcoming & Past Scheduled Services</h1>
+        <a href="add-schedule.html" class="btn admin-link">
+          <i class="fas fa-plus"></i>
+          Add a new schedule
+        </a>
+
+      <div class="table-container">
+        <table id="scheduleTable">
+        <thead>
+        <tr>
+          <th onclick="sortSchedule(0)">Date</th>
+          <th onclick="sortSchedule(1)">Time</th>
+          <th onclick="sortSchedule(2)">Vehicle</th>
+          <th onclick="sortSchedule(3)">Service</th>
+          <th onclick="sortSchedule(4)">Status</th>
+          <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody id="scheduleBody">
+        <!-- JavaScript will populate this -->
+        </tbody>
+      </table>
+      </div>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div>
+            <h3>Contact Us</h3>
+            <p>123 Rajapihilla Rd, Kurunegala</p>
+            <p>(037) 2640-640</p>
+            <p>support@autocarepro.com</p>
+          </div>
+          <div>
+            <h3>Quick Links</h3>
+            <p><a href="index.html" >Home</a></p>
+            <p><a href="vehicle.html">My Vehicle</a></p>
+            <p><a href="schedule.html">Schedule</a></p>
+            <p><a href="services.html">Services</a></p>
+            <p><a href="profile.html">Profile</a></p>
+            <p><a href="../index/index.html">Logout</a></p>
+          </div>
+        </div>
+        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="../assets/js/auth.js"></script>
+
+    <script>
+      function sortSchedule(colIndex) {
+        const table = document.getElementById("scheduleTable");
+        const rows = Array.from(table.rows).slice(1);
+        rows.sort((a, b) => {
+          const aText = a.cells[colIndex].textContent.trim();
+          const bText = b.cells[colIndex].textContent.trim();
+          return aText.localeCompare(bText, undefined, { numeric: true });
+        });
+        rows.forEach((row) => table.tBodies[0].appendChild(row));
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!db.currentUser) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        const userId = db.currentUser.id;
+        const scheduleBody = document.getElementById("scheduleBody");
+        const history = db.serviceHistory.filter((s) => s.userId === userId);
+
+        scheduleBody.innerHTML = "";
+        history.forEach((s) => {
+          const vehicle = db.cars.find((c) => c.id === s.vehicleId) || {};
+          const service = db.services.find((svc) => svc.id === s.serviceId) || {};
+          const row = document.createElement("tr");
+          const date = new Date(s.date);
+          row.innerHTML = `
+      <td>${date.toLocaleDateString()}</td>
+      <td>${date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</td>
+      <td>${vehicle.make} ${vehicle.model}</td>
+      <td>${service.name}</td>
+      <td><span class="status-badge status-${s.status.toLowerCase()}">${s.status}</span></td>
+      <td>${s.notes || ""}</td>
+    `;
+          scheduleBody.appendChild(row);
+        });
+      });
+    </script>
+  </body>
+</html>

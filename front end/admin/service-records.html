@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Service Records - AutoCare Pro</title>
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
+          <div class="logo-text">
+            Auto
+            <span>Care</span>
+            Pro
+          </div>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="admin.html" >Dashboard</a></li>
+            <li><a href="service-records.html" class="active" >Service Record</a></li>
+            <li><a href="serviceManage.html" >Service Management</a></li>
+            <li><a href="userManagement.html">User Management</a></li>
+            <li><a href="../index/index.html">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <h1>Service Records</h1>
+
+          <div class="table-actions">
+            <a href="add-service-record.html" class="btn">Add New Record</a>
+          </div>
+
+        <div class="table-container">
+          <table id="serviceRecordsTable">
+            <thead>
+              <tr>
+                <th onclick="sortTable(0)">Date</th>
+                <th onclick="sortTable(1)">Customer</th>
+                <th onclick="sortTable(2)">Vehicle</th>
+                <th onclick="sortTable(3)">Service</th>
+                <th onclick="sortTable(4)">Cost</th>
+                <th onclick="sortTable(5)">Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="serviceRecordsBody">
+              <!-- Populated by script.js -->
+            </tbody>
+          </table>
+        </div>
+
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div>
+            <h3>Contact Us</h3>
+            <p>123 Rajapihilla Rd, Kurunegala</p>
+            <p>(037) 2640-640</p>
+            <p>support@autocarepro.com</p>
+          </div>
+          <div>
+            <h3>Quick Links</h3>
+            <p><a href="admin.html" class="active">Dashboard</a></p>
+            <p><a href="service-records.html">Service Record</a></p>
+            <p><a href="serviceManage.html">Service Management</a></p>
+            <p><a href="userManagement.html">User Management</a></p>
+            <p><a href="../index/index.html" >Logout</a></p>
+          </div>
+        </div>
+        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      function sortTable(columnIndex) {
+        const table = document.getElementById("serviceRecordsTable");
+        const rows = Array.from(table.rows).slice(1);
+        let sorted = rows.sort((a, b) => {
+          const aText = a.cells[columnIndex].innerText.trim();
+          const bText = b.cells[columnIndex].innerText.trim();
+          return aText.localeCompare(bText, undefined, { numeric: true });
+        });
+
+        sorted.forEach((row) => table.tBodies[0].appendChild(row));
+      }
+    </script>
+
+  </body>
+</html>
