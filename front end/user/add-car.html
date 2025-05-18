@@ -112,26 +112,7 @@
         opt.textContent = y;
         yearSelect.appendChild(opt);
       }
-
-      // Handle form submission
-      document.getElementById("addCarForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const carData = {
-          make: document.getElementById("make").value,
-          model: document.getElementById("model").value,
-          year: document.getElementById("year").value,
-          licensePlate: document.getElementById("licensePlate").value,
-          vin: document.getElementById("vin").value,
-          color: document.getElementById("color").value,
-        };
-
-        console.log("New Vehicle Submitted:", carData);
-        alert("Vehicle saved successfully!");
-
-        // Redirect back to My Vehicles page
-        window.location.href = "vehicle.html";
-      });
     </script>
+  <script src="../assets/js/vehicle.js"></script>
   </body>
 </html>
