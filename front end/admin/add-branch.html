@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add User | AutoCare Pro</title>
+
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+
+<body>
+<header>
+  <div class="header-container">
+    <a class="logo">
+      <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro logo">
+      <span class="logo-text">Auto<span>Care</span>Pro</span>
+    </a>
+
+    <nav>
+      <ul>
+        <li><a href="admin.html">Dashboard</a></li>
+        <li><a href="service-records.html">Service Record</a></li>
+        <li><a href="branchManagement.html" class="active">Garage Management</a></li>
+        <li><a href="serviceManage.html">Service Management</a></li>
+        <li><a href="userManagement.html">User Management</a></li>
+        <li><a href="../index/index.html">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <section>
+    <h1>Add New Branch</h1>
+
+    <form action="#" method="post" novalidate>
+      <!-- inside <form> … -->
+      <div class="form-group">
+        <label for="branchId">Branch ID</label>
+        <input type="text"
+               id="branchId"
+               name="branchId"
+               pattern="^[A-Za-z0-9_-]{3,20}$"
+               title="3–20 letters, numbers, dashes or underscores"
+               required>
+      </div>
+
+      <div class="form-group">
+        <label for="branchName">Branch Name</label>
+        <input type="text"
+               id="branchName"
+               name="branchName"
+               required
+               autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text"
+               id="location"
+               name="location"
+               required
+               autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="managerName">Manager Name</label>
+        <input type="text"
+               id="managerName"
+               name="managerName"
+               pattern="^[A-Za-z\\s.'-]{3,40}$"
+               title="Letters only, 3–40chars"
+               required>
+      </div>
+
+
+      <button type="submit" class="btn admin-link">
+        <i class="fas fa-save" aria-hidden="true"></i>
+        Save Service
+      </button>
+    </form>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <h3>Contact Us</h3>
+        <p>123 Rajapihilla Rd, Kurunegala</p>
+        <p>(037) 2640-640</p>
+        <p>support@autocarepro.com</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <p><a href="admin.html" class="active">Dashboard</a></p>
+        <p><a href="service-records.html">Service Record</a></p>
+        <p><a href="branchManagement.html">Garage Management</a></p>
+        <p><a href="serviceManage.html">Service Management</a></p>
+        <p><a href="userManagement.html">User Management</a></p>
+        <p><a href="../index/index.html" >Logout</a></p>
+      </div>
+    </div>
+    <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+  </div>
+</footer>
+</body>
+</html>
