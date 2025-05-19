@@ -1,125 +1,199 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const customerTableBody = document.querySelector('#customersTable tbody');
-    const customerCountEl = document.getElementById('customerCount');
-    const addCustomerBtn = document.getElementById('addCustomerBtn');
-    const customerModal = document.getElementById('customerModal');
-    const closeModalBtn = customerModal.querySelector('.close');
-    const cancelBtn = document.getElementById('cancelBtn');
-    const customerForm = document.getElementById('customerForm');
-    const searchInput = document.getElementById('searchCustomers');
-
-    const modalTitle = document.getElementById('modalTitle');
-    const modalName = document.getElementById('modalName');
-    const modalEmail = document.getElementById('modalEmail');
-    const modalPhone = document.getElementById('modalPhone');
-    const modalPassword = document.getElementById('modalPassword');
-    const modalCustomerId = document.getElementById('customerId');
-
-    let customers = [
-        { id: 1, name: "John Doe", email: "john@example.com", phone: "555-1234", registered: "2024-10-01" },
+document.addEventListener("DOMContentLoaded", () => {
+    let users = [
+        {
+            id: 1,
+            name: "John Doe",
+            email: "john@example.com",
+            phone: "+1234567890",
+            isAdmin: false,
+            registered: "2024-12-01"
+        }
     ];
 
-    function renderCustomers(list = customers) {
-        customerTableBody.innerHTML = '';
-        list.forEach(customer => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${customer.id}</td>
-                <td>${customer.name}</td>
-                <td>${customer.email}</td>
-                <td>${customer.phone}</td>
-                <td>${customer.registered}</td>
-                <td>
-                    <button class="btn btn-small" onclick="editCustomer(${customer.id})"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-small btn-danger" onclick="deleteCustomer(${customer.id})"><i class="fas fa-trash"></i></button>
-                </td>
-            `;
-            customerTableBody.appendChild(row);
-        });
-        customerCountEl.textContent = list.length;
+    const usersTableBody = document.querySelector("#usersTable tbody");
+    const userModal = document.getElementById("userModal");
+    const modalClose = document.querySelector(".modal .close");
+    const userForm = document.getElementById("userForm");
+    const messageBox = document.getElementById("message");
+
+    // Fetch users and populate table
+    function fetchAndPopulateUsers() {
+        usersTableBody.innerHTML = `<tr><td colspan="7" class="text-center">Loading...</td></tr>`;
+        fetch("http://localhost:8080/api/users", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                users = data.length ? data : users; // Use fetched data if available, else keep initial users
+                populateTable();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                showMessage("Failed to fetch users.", false);
+                populateTable(); // Show initial users as fallback
+            });
     }
 
-    window.editCustomer = function(id) {
-        const customer = customers.find(c => c.id === id);
-        if (!customer) return;
-
-        modalTitle.textContent = "Edit Customer";
-        modalCustomerId.value = customer.id;
-        modalName.value = customer.name;
-        modalEmail.value = customer.email;
-        modalPhone.value = customer.phone;
-        modalPassword.value = "";
-        openModal();
+    // Show message
+    function showMessage(message, isSuccess = true) {
+        messageBox.textContent = message;
+        messageBox.className = `message-box ${isSuccess ? "message-success" : "message-error"}`;
+        messageBox.classList.remove("hidden");
+        setTimeout(() => messageBox.classList.add("hidden"), 3000);
     }
 
-    window.deleteCustomer = function(id) {
-        if (confirm("Are you sure you want to delete this customer?")) {
-            customers = customers.filter(c => c.id !== id);
-            renderCustomers();
+    // Populate table
+    function populateTable() {
+        if (!usersTableBody) {
+            console.error("Table body not found");
+            return;
         }
-    }
-
-    function openModal() {
-        customerModal.style.display = 'block';
-    }
-
-    function closeModal() {
-        customerModal.style.display = 'none';
-        customerForm.reset();
-        modalCustomerId.value = '';
-        modalTitle.textContent = "Add New Customer";
-    }
-
-    addCustomerBtn.addEventListener('click', openModal);
-    closeModalBtn.addEventListener('click', closeModal);
-    cancelBtn.addEventListener('click', closeModal);
-
-    window.onclick = function(event) {
-        if (event.target === customerModal) closeModal();
-    };
-
-    customerForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const id = modalCustomerId.value;
-        const name = modalName.value.trim();
-        const email = modalEmail.value.trim();
-        const phone = modalPhone.value.trim();
-
-        if (!name || !email || !phone) {
-            alert("Please fill all required fields.");
+        usersTableBody.innerHTML = "";
+        if (!users || users.length === 0) {
+            usersTableBody.innerHTML = `<tr><td colspan="7" class="text-center">No users found</td></tr>`;
             return;
         }
 
-        if (id) {
-            const customer = customers.find(c => c.id == id);
-            customer.name = name;
-            customer.email = email;
-            customer.phone = phone;
-        } else {
-            const newId = customers.length ? Math.max(...customers.map(c => c.id)) + 1 : 1;
-            customers.push({
-                id: newId,
-                name,
-                email,
-                phone,
-                registered: new Date().toISOString().split('T')[0]
-            });
+        const fragment = document.createDocumentFragment();
+        users.forEach((user) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>${user.id}</td>
+            <td>${user.name}</td>
+            <td>${user.email}</td>
+            <td>${user.phone}</td>
+            <td>${user.role}</td>
+          `;
+            fragment.appendChild(row);
+        });
+        usersTableBody.appendChild(fragment);
+    }
+
+    // Open modal
+    function openModal(user) {
+        document.getElementById("userId").value = user.id;
+        document.getElementById("userName").value = user.name;
+        document.getElementById("userEmail").value = user.email;
+        document.getElementById("userPhone").value = user.phone;
+        document.getElementById("userPassword").value = "";
+        document.getElementById("userIsAdmin").checked = user.isAdmin;
+        document.getElementById("userModalTitle").textContent = "Edit User";
+        userModal.style.display = "block";
+    }
+
+    // Close modal
+    function closeModal() {
+        userModal.style.display = "none";
+        userForm.reset();
+    }
+
+    // Update user (with backend sync)
+    function updateUser(data) {
+        const updateData = {
+            id: parseInt(data.id),
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            isAdmin: data.isAdmin
+        };
+        if (data.password) {
+            updateData.password = data.password;
         }
 
-        renderCustomers();
+        // Send PUT request to backend
+        fetch(`http://localhost:8080/api/users/${data.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updateData)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to update user");
+                }
+                return response.json();
+            })
+            .then((updatedUser) => {
+                const index = users.findIndex((u) => u.id === parseInt(data.id));
+                if (index !== -1) {
+                    users[index] = updatedUser;
+                    showMessage("User updated successfully.");
+                    populateTable();
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                showMessage("Failed to update user.", false);
+            });
+    }
+
+    // Delete user (with backend sync)
+    function deleteUser(id) {
+        fetch(`http://localhost:8080/api/users/${id}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to delete user");
+                }
+                users = users.filter((u) => u.id !== parseInt(id));
+                showMessage("User deleted.");
+                populateTable();
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                showMessage("Failed to delete user.", false);
+            });
+    }
+
+    // Event listeners
+    usersTableBody.addEventListener("click", (e) => {
+        if (e.target.closest(".editBtn")) {
+            const id = parseInt(e.target.closest(".editBtn").dataset.id);
+            const user = users.find((u) => u.id === id);
+            if (user) openModal(user);
+        }
+        if (e.target.closest(".deleteBtn")) {
+            const id = parseInt(e.target.closest(".deleteBtn").dataset.id);
+            if (confirm("Are you sure you want to delete this user?")) {
+                deleteUser(id);
+            }
+        }
+    });
+
+    userForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const id = document.getElementById("userId").value;
+        const name = document.getElementById("userName").value.trim();
+        const email = document.getElementById("userEmail").value.trim();
+        const phone = document.getElementById("userPhone").value.trim();
+        const password = document.getElementById("userPassword").value.trim();
+        const isAdmin = document.getElementById("userIsAdmin").checked;
+
+        updateUser({ id, name, email, phone, password, isAdmin });
         closeModal();
     });
 
-    searchInput.addEventListener('input', function() {
-        const keyword = this.value.toLowerCase();
-        const filtered = customers.filter(c =>
-            c.name.toLowerCase().includes(keyword) ||
-            c.email.toLowerCase().includes(keyword) ||
-            c.phone.includes(keyword)
-        );
-        renderCustomers(filtered);
+    modalClose.addEventListener("click", closeModal);
+    window.addEventListener("click", (e) => {
+        if (e.target === userModal) closeModal();
+    });
+    modalClose.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === "Escape") closeModal();
     });
 
-    renderCustomers();
+    // Initialize
+    fetchAndPopulateUsers();
 });

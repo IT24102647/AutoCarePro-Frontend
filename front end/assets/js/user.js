@@ -70,8 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <td>${user.name}</td>
             <td>${user.email}</td>
             <td>${user.phone}</td>
-            <td>${user.isAdmin ? '<i class="fas fa-check-circle text-green"></i>' : '<i class="fas fa-times-circle text-red"></i>'}</td>
-            <td>${user.registered}</td>
+            <td>${user.role}</td>
             <td>
               <button class="btn editBtn" data-id="${user.id}"><i class="fas fa-edit"></i></button>
               <button class="btn deleteBtn" data-id="${user.id}"><i class="fas fa-trash"></i></button>
@@ -89,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("userEmail").value = user.email;
         document.getElementById("userPhone").value = user.phone;
         document.getElementById("userPassword").value = "";
-        document.getElementById("userIsAdmin").checked = user.isAdmin;
+        document.getElementById("userIsAdmin").value = user.role;
         document.getElementById("userModalTitle").textContent = "Edit User";
         userModal.style.display = "block";
     }
@@ -107,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             name: data.name,
             email: data.email,
             phone: data.phone,
-            isAdmin: data.isAdmin
+            role: data.role
         };
         if (data.password) {
             updateData.password = data.password;
@@ -185,9 +184,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.getElementById("userEmail").value.trim();
         const phone = document.getElementById("userPhone").value.trim();
         const password = document.getElementById("userPassword").value.trim();
-        const isAdmin = document.getElementById("userIsAdmin").checked;
+        const role = document.getElementById("userIsAdmin").value.trim();
 
-        updateUser({ id, name, email, phone, password, isAdmin });
+        updateUser({ id, name, email, phone, password, role });
         closeModal();
     });
 

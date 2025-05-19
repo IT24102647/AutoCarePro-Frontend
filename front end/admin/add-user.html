@@ -33,7 +33,7 @@
 </header>
 
 <main class="container">
-    <h1>Add New Admin 1</h1>
+    <h1>Add New User</h1>
 
     <div id="message" class="hidden message-box"></div>
 
@@ -89,7 +89,6 @@
         const email = document.getElementById("userEmail").value.trim();
         const phone = document.getElementById("userPhone").value.trim();
         const password = document.getElementById("userPassword").value.trim();
-        const isAdmin = document.getElementById("userIsAdmin").checked;
 
         const newUser = {
             id: 0,
@@ -97,7 +96,7 @@
             email,
             phone,
             password,
-            role:"Admin",
+            role: "User",
 
         };
         console.log(newUser);
@@ -131,7 +130,7 @@
 
         // Optional: Redirect
         setTimeout(() => {
-            window.location.href = "user.html";
+            window.location.href = "userManagement.html";
         }, 1500);
     });
 </script>

@@ -34,36 +34,59 @@
     <main class="container">
       <h1>Admin Dashboard</h1>
 
-      <div class="dashboard-summary">
-        <div class="stat-card">
-          <i class="fas fa-users"></i>
-          <h3>Total Customers</h3>
-          <p id="customerCount">0</p>
-        </div>
-      </div>
+      <div id="message" style="display: none; margin-bottom: 20px"></div>
 
       <div class="table-container">
-        <h2>Customer List</h2>
-        <div class="table-actions">
-
-        </div>
-        <table id="customersTable">
+        <table id="usersTable">
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Registered</th>
-              <th>Actions</th>
-            </tr>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+          </tr>
           </thead>
           <tbody>
-            <!-- Populated by JS -->
+          <!-- Users will load here by JavaScript -->
           </tbody>
         </table>
       </div>
     </main>
+
+    <!-- User Modal -->
+    <div id="userModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle">
+      <div class="modal-content">
+        <span class="close" role="button" aria-label="Close modal" tabindex="0">&times;</span>
+        <h2 id="userModalTitle">Edit User</h2>
+        <form id="userForm">
+          <input type="hidden" id="userId" />
+          <div class="form-group">
+            <label for="userName">Full Name</label>
+            <input type="text" id="userName" required />
+          </div>
+          <div class="form-group">
+            <label for="userEmail">Email</label>
+            <input type="email" id="userEmail" required />
+          </div>
+          <div class="form-group">
+            <label for="userPhone">Phone</label>
+            <input type="tel" id="userPhone" required pattern="^\+?[0-9]{7,15}$" title="Enter a valid phone number." />
+          </div>
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input type="password" id="userPassword" />
+          </div>
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="userIsAdmin" />
+              Admin Privileges
+            </label>
+          </div>
+          <button type="submit" class="btn">Save User</button>
+        </form>
+      </div>
+    </div>
 
     <footer>
       <div class="container">
@@ -87,7 +110,6 @@
         <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
       </div>
     </footer>
-
-    <script src="../assets/js/admin.js"></script>
+      <script src="../assets/js/admin.js"></script>
   </body>
 </html>

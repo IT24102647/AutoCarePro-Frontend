@@ -135,6 +135,9 @@
             formMessage.textContent = "❌ Error saving service record.";
             formMessage.style.color = "red";
           }
+          setTimeout(() => {
+            window.location.href = "service-records.html";
+          }, 1500);
         });
       });
     </script>

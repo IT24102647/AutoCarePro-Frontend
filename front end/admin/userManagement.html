@@ -48,8 +48,7 @@
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Admin</th>
-              <th>Registered</th>
+              <th>Role</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -84,10 +83,8 @@
             <input type="password" id="userPassword" />
           </div>
           <div class="form-group">
-            <label>
-              <input type="checkbox" id="userIsAdmin" />
-              Admin Privileges
-            </label>
+              <label for="userIsAdmin">Role</label>
+              <input type="text" id="userIsAdmin" />
           </div>
           <button type="submit" class="btn">Save User</button>
         </form>
