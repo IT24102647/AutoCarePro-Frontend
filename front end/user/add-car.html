@@ -126,9 +126,9 @@
         formMessage.textContent = "✅ Vehicle record added successfully.";
         formMessage.style.color = "green";
         form.reset();
-        setTimeout(() => {
+         setTimeout(() => {
           window.location.href = "vehicle.html";
-        }, 1000); // Redirect after 1 second
+         }, 1000); // Redirect after 1 second
       } catch (error) {
         console.error(error);
         formMessage.textContent = "❌ Error saving vehicle record.";

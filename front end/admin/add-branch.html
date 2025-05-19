@@ -31,55 +31,32 @@
 </header>
 
 <main class="container">
-  <section>
-    <h1>Add New Branch</h1>
+  <section class="form-section">
+    <h2>Add New Branch</h2>
+    <form id="addVehicleForm">
 
-    <form action="#" method="post" novalidate>
-      <!-- inside <form> … -->
       <div class="form-group">
-        <label for="branchId">Branch ID</label>
-        <input type="text"
-               id="branchId"
-               name="branchId"
-               pattern="^[A-Za-z0-9_-]{3,20}$"
-               title="3–20 letters, numbers, dashes or underscores"
-               required>
+        <label for="branchId">Branch Id</label>
+        <input type="text" id="branchId" placeholder="Enter ID number" required />
       </div>
-
       <div class="form-group">
         <label for="branchName">Branch Name</label>
-        <input type="text"
-               id="branchName"
-               name="branchName"
-               required
-               autocomplete="off">
+        <input type="text" id="branchName" placeholder="Enter Branch Name" required />
       </div>
-
       <div class="form-group">
         <label for="location">Location</label>
-        <input type="text"
-               id="location"
-               name="location"
-               required
-               autocomplete="off">
+        <input type="text" id="location" placeholder="Enter Location" required />
       </div>
-
       <div class="form-group">
         <label for="managerName">Manager Name</label>
-        <input type="text"
-               id="managerName"
-               name="managerName"
-               pattern="^[A-Za-z\\s.'-]{3,40}$"
-               title="Letters only, 3–40chars"
-               required>
-      </div>
+        <input type="text" id="managerName" placeholder="Enter Manager Nama" required />
 
-
-      <button type="submit" class="btn admin-link">
-        <i class="fas fa-save" aria-hidden="true"></i>
-        Save Branch
+      <button type="submit" class="btn">
+        <i class="fas fa-save"></i>
+        Save Vehicle
       </button>
     </form>
+    <p id="formMessage"></p>
   </section>
 </main>
 
@@ -104,6 +81,51 @@
     </div>
     <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("addVehicleForm");
+      const formMessage = document.getElementById("formMessage");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const newVehicle = {
+          branchId: 0,
+          branchName: document.getElementById("branchName").value.trim(),
+          location: document.getElementById("location").value.trim(),
+          managerName: document.getElementById("managerName").value.trim(),
+
+          vin: document.getElementById("branchId").value.trim()
+        };
+
+        try {
+          const response = await fetch("http://localhost:8080/api/garages", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newVehicle)
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to save vehicle record");
+          }
+
+          formMessage.textContent = "✅ Vehicle record added successfully.";
+          formMessage.style.color = "green";
+          form.reset();
+          setTimeout(() => {
+            window.location.href = "branchManagement.html";
+          }, 1000); // Redirect after 1 second
+        } catch (error) {
+          console.error(error);
+          formMessage.textContent = "❌ Error saving vehicle record.";
+          formMessage.style.color = "red";
+        }
+      });
+    });
+  </script>
 </footer>
 </body>
 </html>
