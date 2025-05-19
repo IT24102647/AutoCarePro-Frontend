@@ -1,164 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Vehicles - AutoCare Pro</title>
-    <link rel="stylesheet" href="../assets/css/styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  </head>
-  <body>
-    <header>
-      <div class="header-container">
-        <div class="logo">
-          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
-          <div class="logo-text">
-            Auto
-            <span>Care</span>
-            Pro
-          </div>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="index.html" >Home</a></li>
-            <li><a href="vehicle.html" class="active">My Vehicle</a></li>
-            <li><a href="schedule.html">Schedule</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="profile.html" >Profile</a></li>
-            <li><a href="../index/index.html">Logout</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vehicle Records - AutoCare Pro</title>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
 
-    <main class="container">
-      <h1>My Vehicles</h1>
-          <a href="add-car.html" class="btn admin-link">
-            <i class="fas fa-plus"></i>
-            Add New Vehicle
-          </a>
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
 
-        <div class="table-container">
-          <table id="carsTable">
-            <thead>
-              <tr>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>License Plate</th>
-                <th>Last Service</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="carsTableBody">
-              <!-- Vehicle rows will be inserted dynamically via JavaScript -->
-            </tbody>
-          </table>
-          <template id="carRowTemplate">
-            <tr>
-              <td class="car-make"></td>
-              <td class="car-model"></td>
-              <td class="car-year"></td>
-              <td class="car-plate"></td>
-              <td class="car-service"></td>
-              <td class="actions">
-                <button class="btn-icon edit-btn" title="Edit">
-                  <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn-icon delete-btn" title="Delete">
-                  <i class="fas fa-trash"></i>
-                </button>
-                <button class="btn-icon history-btn" title="Service History">
-                  <i class="fas fa-history"></i>
-                </button>
-              </td>
-            </tr>
-          </template>
-        </div>
-    </main>
+    .close-button {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
 
-    <!-- Add/Edit Car Modal -->
-    <div id="carModal" class="modal">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 id="modalTitle">Add New Vehicle</h2>
-        <form id="carForm">
-          <input type="hidden" id="carId" />
+    .modal.show {
+      display: block;
+    }
 
-          <div class="form-group">
-            <label for="make">Make</label>
-            <input type="text" id="make" name="make" required />
-          </div>
+    /* Modal form styles */
+    #updateVehicleForm label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+    }
 
-          <div class="form-group">
-            <label for="model">Model</label>
-            <input type="text" id="model" name="model" required />
-          </div>
+    #updateVehicleForm input,
+    #updateVehicleForm select {
+      width: 100%;
+      padding: 6px 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
 
-          <div class="form-group">
-            <label for="year">Year</label>
-            <select id="year" name="year" required>
-              <option value="">Select Year</option>
-              <!-- Options will populate by JavaScript -->
-            </select>
-          </div>
+    #updateVehicleForm button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-          <div class="form-group">
-            <label for="licensePlate">License Plate</label>
-            <input type="text" id="licensePlate" name="licensePlate" required />
-          </div>
-
-          <div class="form-group">
-            <label for="vin">VIN (Vehicle Identification Number)</label>
-            <input type="text" id="vin" name="vin" />
-          </div>
-
-          <div class="form-group">
-            <label for="color">Color</label>
-            <input type="text" id="color" name="color" />
-          </div>
-
-          <div class="form-group">
-            <button type="submit" class="btn admin-link">Save Vehicle</button>
-          </div>
-        </form>
+    #updateVehicleForm button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-container">
+    <div class="logo">
+      <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
+      <div class="logo-text">
+        Auto
+        <span>Care</span>
+        Pro
       </div>
     </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="vehicle.html" class="active">My Vehicle</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="../index/index.html">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <!-- Delete Confirmation Modal -->
-    <div id="deleteModal" class="modal">
-      <div class="modal-content" style="max-width: 400px">
-        <h2>Confirm Deletion</h2>
-        <p>Are you sure you want to delete this vehicle? All service history will be lost.</p>
-        <div class="modal-actions">
-          <button id="confirmDelete" class="btn delete-btn">Delete</button>
-          <button id="cancelDelete" class="btn">Cancel</button>
-        </div>
+<main class="container">
+  <h1>Vehicle Records</h1>
+  <div class="table-actions">
+    <a href="add-car.html" class="btn">Add New Vehicle</a>
+  </div>
+  <div class="table-container">
+    <table id="vehicleRecordsTable" data-sort-order="desc">
+      <thead>
+      <tr>
+        <th onclick="sortTable(0)">Vehicle Id</th>
+        <th onclick="sortTable(1)">Plate Number</th>
+        <th onclick="sortTable(2)">Make</th>
+        <th onclick="sortTable(3)">Model</th>
+        <th onclick="sortTable(4)">Color</th>
+        <th onclick="sortTable(5)">Year</th>
+        <th onclick="sortTable(6)">VIN</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody id="vehicleRecordsBody">
+      <!-- Populated by script.js -->
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Update Modal -->
+<div id="updateModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal()">×</span>
+    <h2>Update Vehicle Record</h2>
+    <form id="updateVehicleForm">
+      <input type="hidden" id="updateVehicleId" />
+      <label for="updatePlateNumber">Plate Number</label>
+      <input type="text" id="updatePlateNumber" required />
+
+      <label for="updateMake">Make</label>
+      <input type="text" id="updateMake" required />
+
+      <label for="updateModel">Model</label>
+      <input type="text" id="updateModel" required />
+
+      <label for="updateColor">Color</label>
+      <input type="text" id="updateColor" required />
+
+      <label for="updateYear">Year</label>
+      <input type="date" id="updateYear" required />
+
+      <label for="updateVIN">VIN</label>
+      <input type="text" id="updateVIN" required />
+
+      <button type="submit" class="btn">Update</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <h3>Contact Us</h3>
+        <p>123 Rajapihilla Rd, Kurunegala</p>
+        <p>(037) 2640-640</p>
+        <p>support@autocarepro.com</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="vehicle.html">My Vehicle</a></p>
+        <p><a href="schedule.html">Schedule</a></p>
+        <p><a href="services.html">Services</a></p>
+        <p><a href="profile.html">Profile</a></p>
+        <p><a href="../index/index.html">Logout</a></p>
       </div>
     </div>
-   
-      <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div>
-            <h3>Contact Us</h3>
-            <p>123 Rajapihilla Rd, Kurunegala</p>
-            <p>(037) 2640-640</p>
-            <p>support@autocarepro.com</p>
-          </div>
-          <div>
-            <h3>Quick Links</h3>
-            <p><a href="index.html" >Home</a></p>
-            <p><a href="vehicle.html">My Vehicle</a></p>
-            <p><a href="schedule.html">Schedule</a></p>
-            <p><a href="services.html">Services</a></p>
-            <p><a href="profile.html">Profile</a></p>
-            <p><a href="../index/index.html">Logout</a></p>
-          </div>
-        </div>
-        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
-      </div>
-    </footer>
-  <script src="../assets/js/vehicle.js"></script>
-  </body>
+    <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    fetch("http://localhost:8080/api/vehicle")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const tbody = document.getElementById("vehicleRecordsBody");
+              tbody.innerHTML = "";
+
+              const formatDate = (isoString) => {
+                if (!isoString) return "";
+                const date = new Date(isoString);
+                return date.toISOString().split("T")[0];
+              };
+
+              // Sort by vehicleId descending initially
+              data.sort((a, b) => b.vehicleId - a.vehicleId);
+              console.log(data);
+              data.forEach((vehicle) => {
+                const row = document.createElement("tr");
+                // Escape quotes in vehicle data to prevent JS injection
+                const vehicleStr = JSON.stringify(vehicle).replace(/'/g, "\\'");
+                row.innerHTML = `
+            <td>VID00${vehicle.vehicleId || "0"}</td>
+            <td>${vehicle.plateNumber || ""}</td>
+            <td>${vehicle.make || ""}</td>
+            <td>${vehicle.model || ""}</td>
+            <td>${vehicle.color || ""}</td>
+            <td>${formatDate(vehicle.year)}</td>
+            <td>${vehicle.vin || ""}</td>
+            <td>
+              <a href="#" class="btn-edit" onclick='openEditModal(${vehicleStr})'><i class="fas fa-edit"></i></a>
+              <button class="btn-delete" onclick="deleteVehicle('${
+                        vehicle.vehicleId
+                }')"><i class="fas fa-trash"></i></button>
+            </td>
+          `;
+                tbody.appendChild(row);
+              });
+            })
+            .catch((error) => {
+              console.error("Failed to load vehicle records:", error);
+              alert("Failed to load vehicle records.");
+            });
+  });
+
+  function openEditModal(vehicle) {
+    console.log("Vehicle data:", vehicle);
+    try {
+      document.getElementById("updateVehicleId").value = vehicle.vehicleId || "";
+      document.getElementById("updatePlateNumber").value = vehicle.plateNumber || "";
+      document.getElementById("updateMake").value = vehicle.make || "";
+      document.getElementById("updateModel").value = vehicle.model || "";
+      document.getElementById("updateColor").value = vehicle.color || "";
+      document.getElementById("updateYear").value = vehicle.year? vehicle.year.split("T")[0] : "2020-01-01";
+      document.getElementById("updateVIN").value = vehicle.vin || "";
+      document.getElementById("updateModal").classList.add("show");
+    } catch (error) {
+      console.error("Error populating modal:", error);
+      alert("Failed to load vehicle data.");
+    }
+  }
+
+  function closeModal() {
+    document.getElementById("updateModal").classList.remove("show");
+  }
+
+  document.getElementById("updateVehicleForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const vehicle = {
+      vehicleId: parseInt(document.getElementById("updateVehicleId").value),
+      plateNumber: document.getElementById("updatePlateNumber").value.trim(),
+      make: document.getElementById("updateMake").value.trim(),
+      model: document.getElementById("updateModel").value.trim(),
+      color: document.getElementById("updateColor").value.trim(),
+      year: document.getElementById("updateYear").value,
+      vin: document.getElementById("updateVIN").value.trim(),
+    };
+    console.log(vehicle);
+
+    fetch(`http://localhost:8080/api/vehicle/${vehicle.vehicleId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(vehicle),
+    })
+            .then((res) => {
+              if (!res.ok) throw new Error(`Update failed: ${res.status}`);
+              closeModal();
+              location.reload();
+            })
+            .catch((err) => {
+              console.error("Update error:", err);
+              alert("Failed to update the vehicle record.");
+            });
+  });
+
+  function deleteVehicle(vehicleId) {
+    if (confirm("Are you sure you want to delete this vehicle?")) {
+      fetch(`http://localhost:8080/api/vehicle/${vehicleId}`, {
+        method: "DELETE",
+      })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`Delete request failed: ${response.status}`);
+                }
+                location.reload();
+              })
+              .catch((error) => {
+                console.error("Error deleting vehicle:", error);
+                alert("Failed to delete vehicle record.");
+              });
+    }
+  }
+
+  function sortTable(columnIndex) {
+    const table = document.getElementById("vehicleRecordsTable");
+    const tbody = document.getElementById("vehicleRecordsBody");
+    const rows = Array.from(tbody.getElementsByTagName("tr"));
+    const isAscending = table.dataset.sortOrder !== "asc";
+
+    rows.sort((a, b) => {
+      const aText = a.cells[columnIndex].textContent.trim();
+      const bText = b.cells[columnIndex].textContent.trim();
+
+      if (columnIndex === 0 || columnIndex === 5) {
+        // Vehicle Id or Year (numeric)
+        return isAscending ? parseInt(aText) - parseInt(bText) : parseInt(bText) - parseInt(aText);
+      } else {
+        // Text columns
+        return isAscending ? aText.localeCompare(bText) : bText.localeCompare(bText);
+      }
+    });
+
+    tbody.innerHTML = "";
+    rows.forEach((row) => tbody.appendChild(row));
+    table.dataset.sortOrder = isAscending ? "asc" : "desc";
+  }
+</script>
+</body>
 </html>
