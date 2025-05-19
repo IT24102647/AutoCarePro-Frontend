@@ -1,100 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Service Records - AutoCare Pro</title>
-    <link rel="stylesheet" href="../assets/css/styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  </head>
-  <body>
-    <header>
-      <div class="header-container">
-        <div class="logo">
-          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
-          <div class="logo-text">
-            Auto
-            <span>Care</span>
-            Pro
-          </div>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="admin.html">Dashboard</a></li>
-            <li><a href="service-records.html" class="active">Service Record</a></li>
-            <li><a href="branchManagement.html">Garage Management</a></li>
-            <li><a href="serviceManage.html">Service Management</a></li>
-            <li><a href="userManagement.html">User Management</a></li>
-            <li><a href="../index/index.html">Logout</a></li>
-          </ul>
-        </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Records - AutoCare Pro</title>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
+  <style>
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-button {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .modal.show {
+      display: block;
+    }
+
+    /* Modal form styles */
+    #updateServiceForm label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    #updateServiceForm input,
+    #updateServiceForm select {
+      width: 100%;
+      padding: 6px 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+
+    #updateServiceForm button {
+      margin-top: 15px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #updateServiceForm button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-container">
+    <div class="logo">
+      <img
+              src="../assets/images/blue-car-logo.png"
+              alt="AutoCare Pro Logo"
+      />
+      <div class="logo-text">
+        Auto <span>Care</span> Pro
       </div>
-    </header>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="admin.html">Dashboard</a></li>
+        <li><a href="service-records.html" class="active">Service Record</a></li>
+        <li><a href="branchManagement.html">Garage Management</a></li>
+        <li><a href="serviceManage.html">Service Management</a></li>
+        <li><a href="userManagement.html">User Management</a></li>
+        <li><a href="../index/index.html">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <main class="container">
-      <h1>Service Records</h1>
+<main class="container">
+  <h1>Service Records</h1>
+  <div class="table-actions">
+    <a href="add-service-record.html" class="btn">Add New Record</a>
+  </div>
+  <div class="table-container">
+    <table id="serviceRecordsTable" data-sort-order="desc">
+      <thead>
+      <tr>
+        <th onclick="sortTable(0)">Date</th>
+        <th onclick="sortTable(1)">Customer</th>
+        <th onclick="sortTable(2)">Vehicle</th>
+        <th onclick="sortTable(3)">Service</th>
+        <th onclick="sortTable(4)">Cost</th>
+        <th onclick="sortTable(5)">Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody id="serviceRecordsBody">
+      <!-- Populated by script.js -->
+      </tbody>
+    </table>
+  </div>
+</main>
 
-          <div class="table-actions">
-            <a href="add-service-record.html" class="btn">Add New Record</a>
-          </div>
+<!-- Update Modal -->
+<div id="updateModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closeModal()">×</span>
+    <h2>Update Service Record</h2>
+    <form id="updateServiceForm">
+      <input type="hidden" id="updateRecordID" />
+      <label for="updateDate">Date</label>
+      <input type="date" id="updateDate" required />
 
-        <div class="table-container">
-          <table id="serviceRecordsTable">
-            <thead>
-              <tr>
-                <th onclick="sortTable(0)">Date</th>
-                <th onclick="sortTable(1)">Customer</th>
-                <th onclick="sortTable(2)">Vehicle</th>
-                <th onclick="sortTable(3)">Service</th>
-                <th onclick="sortTable(4)">Cost</th>
-                <th onclick="sortTable(5)">Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="serviceRecordsBody">
-              <!-- Populated by script.js -->
-            </tbody>
-          </table>
-        </div>
+      <label for="updateCustomer">Customer</label>
+      <input type="text" id="updateCustomer" required />
 
-    </main>
+      <label for="updateVehicle">Vehicle</label>
+      <input type="text" id="updateVehicle" required />
 
-    <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div>
-            <h3>Contact Us</h3>
-            <p>123 Rajapihilla Rd, Kurunegala</p>
-            <p>(037) 2640-640</p>
-            <p>support@autocarepro.com</p>
-          </div>
-          <div>
-            <h3>Quick Links</h3>
-            <p><a href="admin.html" class="active">Dashboard</a></p>
-            <p><a href="service-records.html">Service Record</a></p>
-            <p><a href="branchManagement.html">Garage Management</a></p>
-            <p><a href="serviceManage.html">Service Management</a></p>
-            <p><a href="userManagement.html">User Management</a></p>
-            <p><a href="../index/index.html" >Logout</a></p>
-          </div>
-        </div>
-        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+      <label for="updateService">Service</label>
+      <input type="text" id="updateService" required />
+
+      <label for="updateCost">Cost</label>
+      <input
+              type="number"
+              id="updateCost"
+              step="0.01"
+              min="0"
+              required
+      />
+
+      <label for="updateStatus">Status</label>
+      <select id="updateStatus" required>
+        <option value="Completed">Completed</option>
+        <option value="Pending">Pending</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+
+      <button type="submit" class="btn">Update</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <h3>Contact Us</h3>
+        <p>123 Rajapihilla Rd, Kurunegala</p>
+        <p>(037) 2640-640</p>
+        <p>support@autocarepro.com</p>
       </div>
-    </footer>
+      <div>
+        <h3>Quick Links</h3>
+        <p><a href="admin.html" class="active">Dashboard</a></p>
+        <p><a href="service-records.html">Service Record</a></p>
+        <p><a href="branchManagement.html">Garage Management</a></p>
+        <p><a href="serviceManage.html">Service Management</a></p>
+        <p><a href="userManagement.html">User Management</a></p>
+        <p><a href="../index/index.html">Logout</a></p>
+      </div>
+    </div>
+    <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+  </div>
+</footer>
 
-    <script>
-      function sortTable(columnIndex) {
-        const table = document.getElementById("serviceRecordsTable");
-        const rows = Array.from(table.rows).slice(1);
-        let sorted = rows.sort((a, b) => {
-          const aText = a.cells[columnIndex].innerText.trim();
-          const bText = b.cells[columnIndex].innerText.trim();
-          return aText.localeCompare(bText, undefined, { numeric: true });
-        });
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    fetch("http://localhost:8080/api/service-record")
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+              }
+              return response.json();
+            })
+            .then((data) => {
+              const tbody = document.getElementById("serviceRecordsBody");
+              tbody.innerHTML = "";
 
-        sorted.forEach((row) => table.tBodies[0].appendChild(row));
+              const formatDate = (isoString) => {
+                if (!isoString) return "";
+                const date = new Date(isoString);
+                return date.toISOString().split("T")[0];
+              };
+
+              // Sort by date descending initially
+              data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+              data.forEach((record) => {
+                const row = document.createElement("tr");
+                // Escape quotes in record data to prevent JS injection
+                const recordStr = JSON.stringify(record).replace(/'/g, "\\'");
+                row.innerHTML = `
+            <td>${formatDate(record.date)}</td>
+            <td>${record.customer || ""}</td>
+            <td>${record.vehicle || ""}</td>
+            <td>${record.service || ""}</td>
+            <td>${record.cost || ""}</td>
+            <td>${record.status || ""}</td>
+            <td>
+              <a href="#" class="btn-edit" onclick='openEditModal(${recordStr})'><i class="fas fa-edit"></i></a>
+              <button class="btn-delete" onclick="deleteRecord('${record.recordID}')"><i class="fas fa-trash"></i></button>
+            </td>
+          `;
+                tbody.appendChild(row);
+              });
+            })
+            .catch((error) => {
+              console.error("Failed to load service records:", error);
+              alert("Failed to load service records.");
+            });
+  });
+
+  function openEditModal(record) {
+    console.log("Record data:", record);
+    try {
+      document.getElementById("updateRecordID").value = record.recordID || "";
+      document.getElementById("updateDate").value = record.date ? record.date.split("T")[0] : "";
+      document.getElementById("updateCustomer").value = record.customer || "";
+      document.getElementById("updateVehicle").value = record.vehicle || "";
+      document.getElementById("updateService").value = record.service || "";
+      document.getElementById("updateCost").value = record.cost || "";
+      document.getElementById("updateStatus").value = record.status || "Pending";
+      document.getElementById("updateModal").classList.add("show");
+    } catch (error) {
+      console.error("Error populating modal:", error);
+      alert("Failed to load record data.");
+    }
+  }
+
+  function closeModal() {
+    document.getElementById("updateModal").classList.remove("show");
+  }
+
+  document
+          .getElementById("updateServiceForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const record = {
+              recordID: document.getElementById("updateRecordID").value,
+              date: document.getElementById("updateDate").value,
+              customer: document.getElementById("updateCustomer").value.trim(),
+              vehicle: document.getElementById("updateVehicle").value.trim(),
+              service: document.getElementById("updateService").value.trim(),
+              cost: parseFloat(document.getElementById("updateCost").value),
+              status: document.getElementById("updateStatus").value,
+            };
+
+            fetch(`http://localhost:8080/api/service-record/${record.recordID}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(record),
+            })
+                    .then((res) => {
+                      if (!res.ok) throw new Error(`Update failed: ${res.status}`);
+                      closeModal();
+                      location.reload();
+                    })
+                    .catch((err) => {
+                      console.error("Update error:", err);
+                      alert("Failed to update the record.");
+                    });
+          });
+
+  function deleteRecord(recordID) {
+    if (confirm("Are you sure you want to delete this record?")) {
+      fetch(`http://localhost:8080/api/service-record/${recordID}`, {
+        method: "DELETE",
+      })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`Delete request failed: ${response.status}`);
+                }
+                location.reload();
+              })
+              .catch((error) => {
+                console.error("Error deleting record:", error);
+                alert("Failed to delete record.");
+              });
+    }
+  }
+
+  function sortTable(columnIndex) {
+    const table = document.getElementById("serviceRecordsTable");
+    const tbody = document.getElementById("serviceRecordsBody");
+    const rows = Array.from(tbody.getElementsByTagName("tr"));
+    const isAscending = table.dataset.sortOrder !== "asc";
+
+    rows.sort((a, b) => {
+      const aText = a.cells[columnIndex].textContent.trim();
+      const bText = b.cells[columnIndex].textContent.trim();
+
+      if (columnIndex === 4) { // Cost column (numeric)
+        return isAscending ? parseFloat(aText) - parseFloat(bText) : parseFloat(bText) - parseFloat(aText);
+      } else if (columnIndex === 0) { // Date column
+        return isAscending ? new Date(aText) - new Date(bText) : new Date(bText) - new Date(aText);
+      } else { // Text columns
+        return isAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
       }
-    </script>
+    });
 
-  </body>
+    tbody.innerHTML = "";
+    rows.forEach(row => tbody.appendChild(row));
+    table.dataset.sortOrder = isAscending ? "asc" : "desc";
+  }
+</script>
+</body>
 </html>
