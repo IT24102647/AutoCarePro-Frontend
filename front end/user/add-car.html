@@ -1,118 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Vehicle - AutoCare Pro</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Vehicle  - AutoCare Pro</title>
   <link rel="stylesheet" href="../assets/css/styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  </head>
-  <body>
-    <header>
-      <div class="header-container">
-        <div class="logo">
-          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
-          <div class="logo-text">
-            Auto
-            <span>Care</span>
-            Pro
-          </div>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="index.html" >Home</a></li>
-            <li><a href="vehicle.html" class="active">My Vehicle</a></li>
-            <li><a href="schedule.html">Schedule</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="profile.html" >Profile</a></li>
-            <li><a href="../index/index.html">Logout</a></li>
-          </ul>
-        </nav>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+<header>
+  <div class="header-container">
+    <div class="logo">
+      <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
+      <div class="logo-text">
+        Auto
+        <span>Care</span>
+        Pro
       </div>
-    </header>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="vehicle.html" class="active">My Vehicle</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="../index/index.html">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <main class="container">
-      <section class="car-form-section">
-        <h1>Add New Vehicle</h1>
-        <form id="addCarForm" class="car-form">
-          <div class="form-group">
-            <label for="make">Make</label>
-            <input type="text" id="make" name="make" required />
-          </div>
+<main class="container">
+  <section class="form-section">
+    <h2>Add New Vehicle Record</h2>
+    <form id="addVehicleForm">
 
-          <div class="form-group">
-            <label for="model">Model</label>
-            <input type="text" id="model" name="model" required />
-          </div>
-
-          <div class="form-group">
-            <label for="year">Year</label>
-            <select id="year" name="year" required>
-              <option value="">Select Year</option>
-              <!-- Years populated via JS -->
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="licensePlate">License Plate</label>
-            <input type="text" id="licensePlate" name="licensePlate" required />
-          </div>
-
-          <div class="form-group">
-            <label for="vin">VIN (Vehicle Identification Number)</label>
-            <input type="text" id="vin" name="vin" />
-          </div>
-
-          <div class="form-group">
-            <label for="color">Color</label>
-            <input type="text" id="color" name="color" />
-          </div>
-
-          <div class="form-group">
-            <button type="submit" class="btn admin-link">
-              <i class="fas fa-save"></i>
-              Save Vehicle
-            </button>
-          </div>
-        </form>
-      </section>
-    </main>
-
-  
-      <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div>
-            <h3>Contact Us</h3>
-            <p>123 Rajapihilla Rd, Kurunegala</p>
-            <p>(037) 2640-640</p>
-            <p>support@autocarepro.com</p>
-          </div>
-          <div>
-            <h3>Quick Links</h3>
-            <p><a href="index.html" >Home</a></p>
-            <p><a href="vehicle.html">My Vehicle</a></p>
-            <p><a href="schedule.html">Schedule</a></p>
-            <p><a href="services.html">Services</a></p>
-            <p><a href="profile.html">Profile</a></p>
-            <p><a href="../index/index.html">Logout</a></p>
-          </div>
-        </div>
-        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+      <div class="form-group">
+        <label for="plateNumber">Plate Number</label>
+        <input type="text" id="plateNumber" placeholder="Enter plate number" required />
       </div>
-    </footer>
+      <div class="form-group">
+        <label for="make">Make</label>
+        <input type="text" id="make" placeholder="Enter vehicle make" required />
+      </div>
+      <div class="form-group">
+        <label for="model">Model</label>
+        <input type="text" id="model" placeholder="Enter vehicle model" required />
+      </div>
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" id="color" placeholder="Enter vehicle color" required />
+      </div>
+      <div class="form-group">
+        <label for="year">Year</label>
+        <input type="date" id="year" min="1900" max="2026" placeholder="Enter vehicle year" required />
+      </div>
+      <div class="form-group">
+        <label for="vin">VIN</label>
+        <input type="text" id="vin" placeholder="Enter vehicle VIN" required />
+      </div>
+      <button type="submit" class="btn">
+        <i class="fas fa-save"></i>
+        Save Vehicle
+      </button>
+    </form>
+    <p id="formMessage"></p>
+  </section>
+</main>
 
-    <script>
-      // Populate year dropdown
-      const yearSelect = document.getElementById("year");
-      const currentYear = new Date().getFullYear();
-      for (let y = currentYear; y >= currentYear - 30; y--) {
-        const opt = document.createElement("option");
-        opt.value = y;
-        opt.textContent = y;
-        yearSelect.appendChild(opt);
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <h3>Contact Us</h3>
+        <p>123 Rajapihilla Rd, Kurunegala</p>
+        <p>(037) 2640-640</p>
+        <p>support@autocarepro.com</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="vehicle.html" class="active">My Vehicle</a></p>
+        <p><a href="schedule.html">Schedule</a></p>
+        <p><a href="services.html">Services</a></p>
+        <p><a href="profile.html">Profile</a></p>
+        <p><a href="../index/index.html">Logout</a></p>
+      </div>
+    </div>
+    <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("addVehicleForm");
+    const formMessage = document.getElementById("formMessage");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const newVehicle = {
+        vehicleId: 0,
+        plateNumber: document.getElementById("plateNumber").value.trim(),
+        make: document.getElementById("make").value.trim(),
+        model: document.getElementById("model").value.trim(),
+        color: document.getElementById("color").value.trim(),
+        year: document.getElementById("year").value,
+        vin: document.getElementById("vin").value.trim()
+      };
+
+      try {
+        const response = await fetch("http://localhost:8080/api/vehicle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(newVehicle)
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to save vehicle record");
+        }
+
+        formMessage.textContent = "✅ Vehicle record added successfully.";
+        formMessage.style.color = "green";
+        form.reset();
+        setTimeout(() => {
+          window.location.href = "vehicle.html";
+        }, 1000); // Redirect after 1 second
+      } catch (error) {
+        console.error(error);
+        formMessage.textContent = "❌ Error saving vehicle record.";
+        formMessage.style.color = "red";
       }
-    </script>
-  <script src="../assets/js/vehicle.js"></script>
-  </body>
+    });
+  });
+</script>
+</body>
 </html>
