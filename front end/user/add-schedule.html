@@ -1,145 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Schedule - AutoCare Pro</title>
-    <link rel="stylesheet" href="../assets/css/styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-  </head>
-  <body>
-    <header>
-      <div class="header-container">
-        <div class="logo">
-          <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
-          <div class="logo-text">
-            Auto
-            <span>Care</span>
-            Pro
-          </div>
-        </div>
-        <nav>
-          <ul>
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="vehicle.html">My Vehicle</a></li>
-            <li><a href="schedule.html">Schedule</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="profile.html" >Profile</a></li>
-            <li><a href="../index/index.html">Logout</a></li>
-          </ul>
-        </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Schedule - AutoCare Pro</title>
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    /* Form styles */
+    .form-section {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="date"],
+    .form-group input[type="time"] {
+      padding: 6px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    #scheduleMessage {
+      margin-top: 10px;
+      font-size: 14px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="header-container">
+    <div class="logo">
+      <img src="../assets/images/blue-car-logo.png" alt="AutoCare Pro Logo" />
+      <div class="logo-text">
+        Auto
+        <span>Care</span>
+        Pro
       </div>
-    </header>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="vehicle.html">My Vehicle</a></li>
+        <li><a href="schedule.html" class="active">Schedule</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="../index/index.html">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <main class="container">
-      <section class="form-section">
-        <h2>Schedule a New Service</h2>
-        <form id="scheduleForm">
-          <div class="form-group">
-            <label for="serviceType">Service Type</label>
-            <select id="serviceType" name="serviceType" required></select>
-          </div>
-          <div class="form-group">
-            <label for="serviceDate">Date</label>
-            <input type="date" id="serviceDate" required />
-          </div>
-          <div class="form-group">
-            <label for="serviceTime">Time</label>
-            <input type="time" id="serviceTime" min="08:00" max="17:00" required />
-          </div>
-          <div class="form-group">
-            <label for="vehicleSelect">Plate Number</label>
-            <input id="vehicleSelect" required>
-          </div>
-          <button type="submit" class="btn">
-            <i class="fas fa-calendar-plus"></i>
-            Schedule Service
-          </button>
-          <p id="scheduleMessage"></p>
-        </form>
-      </section>
-    </main>
-
-  
-      <footer>
-      <div class="container">
-        <div class="footer-content">
-          <div>
-            <h3>Contact Us</h3>
-            <p>123 Rajapihilla Rd, Kurunegala</p>
-            <p>(037) 2640-640</p>
-            <p>support@autocarepro.com</p>
-          </div>
-          <div>
-            <h3>Quick Links</h3>
-            <p><a href="index.html" >Home</a></p>
-            <p><a href="vehicle.html">My Vehicle</a></p>
-            <p><a href="schedule.html">Schedule</a></p>
-            <p><a href="services.html">Services</a></p>
-            <p><a href="profile.html">Profile</a></p>
-            <p><a href="../index/index.html">Logout</a></p>
-          </div>
-        </div>
-        <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+<main class="container">
+  <section class="form-section">
+    <h2>Schedule a New Service</h2>
+    <form id="scheduleForm">
+      <div class="form-group">
+        <label for="serviceType">Service Type</label>
+        <input type="text" id="serviceType" name="serviceType" required />
       </div>
-    </footer>
+      <div class="form-group">
+        <label for="vehicleSelect">Plate Number</label>
+        <input type="text" id="vehicleSelect" name="vehicleSelect" required />
+      </div>
+      <div class="form-group">
+        <label for="serviceDate">Date</label>
+        <input type="date" id="serviceDate" required />
+      </div>
+      <div class="form-group">
+        <label for="serviceTime">Time</label>
+        <input type="time" id="serviceTime" min="08:00" max="17:00" required />
+      </div>
+      <button type="submit" class="btn">
+        <i class="fas fa-calendar-plus"></i>
+        Schedule Service
+      </button>
+      <p id="scheduleMessage"></p>
+    </form>
+  </section>
+</main>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const serviceSelect = document.getElementById("serviceType");
-        const vehicleSelect = document.getElementById("vehicleSelect");
-        const message = document.getElementById("scheduleMessage");
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div>
+        <h3>Contact Us</h3>
+        <p>123 Rajapihilla Rd, Kurunegala</p>
+        <p>(037) 2640-640</p>
+        <p>support@autocarepro.com</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <p><a href="index.html">Home</a></p>
+        <p><a href="vehicle.html">My Vehicle</a></p>
+        <p><a href="schedule.html">Schedule</a></p>
+        <p><a href="services.html">Services</a></p>
+        <p><a href="profile.html">Profile</a></p>
+        <p><a href="../index/index.html">Logout</a></p>
+      </div>
+    </div>
+    <p>© 2025 AutoCare Pro. All Rights Reserved.</p>
+  </div>
+</footer>
 
-        const serviceOptions = [
-          "Select a Service",
-          "Synthetic Oil Change",
-          "4-Wheel Alignment",
-          "Brake Service",
-          "Battery Test",
-          "Full Detail",
-          "Comprehensive Inspection"
-        ];
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const message = document.getElementById("scheduleMessage");
 
-        serviceOptions.forEach((service, index) => {
-          const option = document.createElement("option");
-          option.value = `svc${index + 1}`;
-          option.textContent = service;
-          serviceSelect.appendChild(option);
-        });
+    // Form submission
+    document.getElementById("scheduleForm").addEventListener("submit", (e) => {
+      e.preventDefault();
 
-        const userVehicles = [
-          { id: "v1", make: "Toyota", model: "Corolla", year: "2020" },
-          { id: "v2", make: "Honda", model: "Civic", year: "2021" }
-        ];
+      const serviceType = document.getElementById("serviceType").value.trim();
+      const plateNumber = document.getElementById("vehicleSelect").value.trim();
+      const date = document.getElementById("serviceDate").value;
+      const time = document.getElementById("serviceTime").value;
 
-        userVehicles.forEach((car) => {
-          const option = document.createElement("option");
-          option.value = car.id;
-          option.textContent = `${car.make} ${car.model} (${car.year})`;
-          vehicleSelect.appendChild(option);
-        });
+      if (!serviceType || !plateNumber || !date || !time) {
+        message.textContent = "Please fill in all required fields.";
+        message.style.color = "red";
+        return;
+      }
 
-        document.getElementById("scheduleForm").addEventListener("submit", (e) => {
-          e.preventDefault();
+      const schedule = {
+        serviceType,
+        plateNumber,
+        date: `${date}T${time}:00.000Z`,
+        status: "Scheduled"
+      };
 
-          const serviceId = serviceSelect.value;
-          const vehicleId = vehicleSelect.value;
-          const date = document.getElementById("serviceDate").value;
-          const time = document.getElementById("serviceTime").value;
-          const notes = document.getElementById("specialRequests").value;
-
-          if (!serviceId || !vehicleId || !date || !time) {
-            message.textContent = "Please fill in all required fields.";
-            message.style.color = "red";
-            return;
-          }
-
-          message.textContent = "Service scheduled successfully!";
-          message.style.color = "green";
-          document.getElementById("scheduleForm").reset();
-        });
-      });
-    </script>
-
-  </body>
+      fetch("http://localhost:8080/api/schedules", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(schedule),
+      })
+              .then((response) => {
+                if (!response.ok) throw new Error(`Failed to schedule service: ${response.status}`);
+                return response.json();
+              })
+              .then(() => {
+                message.textContent = "Service scheduled successfully!";
+                message.style.color = "green";
+                document.getElementById("scheduleForm").reset();
+                setTimeout(() => {
+                  window.location.href = "schedule.html";
+                }, 1500);
+              })
+              .catch((error) => {
+                console.error("Error scheduling service:", error);
+                message.textContent = "Service scheduled successfully!";
+                message.style.color = "green";
+              });
+    });
+  });
+</script>
+</body>
 </html>

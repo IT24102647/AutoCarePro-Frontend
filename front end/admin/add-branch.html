@@ -40,8 +40,8 @@
         <input type="text" id="branchId" placeholder="Enter ID number" required />
       </div>
       <div class="form-group">
-        <label for="branchName">Branch Name</label>
-        <input type="text" id="branchName" placeholder="Enter Branch Name" required />
+        <label for="branch">Branch Name</label>
+        <input type="text" id="branch" placeholder="Enter Branch Name" required />
       </div>
       <div class="form-group">
         <label for="location">Location</label>
@@ -50,7 +50,7 @@
       <div class="form-group">
         <label for="managerName">Manager Name</label>
         <input type="text" id="managerName" placeholder="Enter Manager Nama" required />
-
+      </div>  
       <button type="submit" class="btn">
         <i class="fas fa-save"></i>
         Save Vehicle
@@ -92,7 +92,7 @@
 
         const newVehicle = {
           branchId: 0,
-          branchName: document.getElementById("branchName").value.trim(),
+          branch: document.getElementById("branch").value.trim(),
           location: document.getElementById("location").value.trim(),
           managerName: document.getElementById("managerName").value.trim(),
 

@@ -90,21 +90,21 @@
                 const tbody = document.getElementById("vehicleRecordsBody");
                 tbody.innerHTML = "";
 
-                // Sort by branchId descending initially
-                data.sort((a, b) => b.branchId - a.branchId);
+                // Sort by id descending initially
+                data.sort((a, b) => b.id - a.id);
                 console.log(data);
                 data.forEach((branchManagement) => {
                     const row = document.createElement("tr");
                     const vehicleStr = JSON.stringify(branchManagement).replace(/'/g, "\\'");
                     row.innerHTML = `
-            <td>VID00${branchManagement.branchId || "0"}</td>
-            <td>${branchManagement.name || ""}</td>
+            <td>VID00${branchManagement.id || "0"}</td>
+            <td>${branchManagement.branch || ""}</td>
             <td>${branchManagement.location || ""}</td>
-            <td>${branchManagement.managerName || ""}</td>
+            <td>${branchManagement.manager || ""}</td>
             <td>
               <a href="#" class="btn-edit" onclick='openEditModal(${vehicleStr})'><i class="fas fa-edit"></i></a>
               <button class="btn-delete" onclick="deleteVehicle('${
-                        branchManagement.branchId
+                        branchManagement.id
                     }')"><i class="fas fa-trash"></i></button>
             </td>
           `;
@@ -120,10 +120,10 @@
     function openEditModal(branchManagement) {
         console.log("branch data:",branchManagement);
         try {
-            document.getElementById("updateBranchId").value = branchManagement.branchId || "";
-            document.getElementById("updateName").value = branchManagement.Name || "";
+            document.getElementById("updateBranchId").value = branchManagement.id || "";
+            document.getElementById("updateName").value = branchManagement.branch || "";
             document.getElementById("updateLocation").value = branchManagement.location || "";
-            document.getElementById("updateManagerName").value = branchManagement.managerName || "";
+            document.getElementById("updateManagerName").value = branchManagement.manager || "";
             document.getElementById("updateModal").classList.add("show");
         } catch (error) {
             console.error("Error populating modal:", error);
@@ -139,14 +139,14 @@
         e.preventDefault();
 
         const branchManagement = {
-            branchId: parseInt(document.getElementById("updateBranchId").value),
-            name: document.getElementById("updateName").value.trim(),
+            id: parseInt(document.getElementById("updateBranchId").value),
+            branch: document.getElementById("updateName").value.trim(),
             location: document.getElementById("updateLocation").value.trim(),
-            managerName: document.getElementById("updateManagerName").value.trim(),
+            manager: document.getElementById("updateManagerName").value.trim(),
         };
         console.log(branchManagement);
 
-        fetch(`http://localhost:8080/api/garages/${branchManagement.branchId}`, {
+        fetch(`http://localhost:8080/api/garages/${branchManagement.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -164,9 +164,9 @@
             });
     });
 
-    function deleteVehicle(branchId) {
+    function deleteVehicle(id) {
         if (confirm("Are you sure you want to delete this vehicle?")) {
-            fetch(`http://localhost:8080/api/garages/${branchId}`, {
+            fetch(`http://localhost:8080/api/garages/${id}`, {
                 method: "DELETE",
             })
                 .then((response) => {
