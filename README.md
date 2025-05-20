@@ -19,7 +19,6 @@ AutoCarePro is a web-based car service and maintenance tracking system designed 
 - HTML
 - CSS
 - JavaScript
-- Bootstrap
 
 ---
 
