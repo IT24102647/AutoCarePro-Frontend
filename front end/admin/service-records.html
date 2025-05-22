@@ -313,23 +313,42 @@
     const rows = Array.from(tbody.getElementsByTagName("tr"));
     const isAscending = table.dataset.sortOrder !== "asc";
 
-    rows.sort((a, b) => {
-      const aText = a.cells[columnIndex].textContent.trim();
-      const bText = b.cells[columnIndex].textContent.trim();
+    // Selection Sort
+    for (let i = 0; i < rows.length - 1; i++) {
+      let swapIndex = i;
 
-      if (columnIndex === 4) { // Cost column (numeric)
-        return isAscending ? parseFloat(aText) - parseFloat(bText) : parseFloat(bText) - parseFloat(aText);
-      } else if (columnIndex === 0) { // Date column
-        return isAscending ? new Date(aText) - new Date(bText) : new Date(bText) - new Date(aText);
-      } else { // Text columns
-        return isAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+      for (let j = i + 1; j < rows.length; j++) {
+        const aText = rows[swapIndex].cells[columnIndex].textContent.trim();
+        const bText = rows[j].cells[columnIndex].textContent.trim();
+
+        let compare = 0;
+
+        if (columnIndex === 4) {
+          compare = parseFloat(bText) - parseFloat(aText);
+        } else if (columnIndex === 0) {
+          compare = new Date(bText) - new Date(aText);
+        } else {
+          compare = bText.localeCompare(aText);
+        }
+
+        if ((isAscending && compare < 0) || (!isAscending && compare > 0)) {
+          swapIndex = j;
+        }
       }
-    });
+
+      if (swapIndex !== i) {
+        const temp = rows[i];
+        rows[i] = rows[swapIndex];
+        rows[swapIndex] = temp;
+      }
+    }
 
     tbody.innerHTML = "";
     rows.forEach(row => tbody.appendChild(row));
+
     table.dataset.sortOrder = isAscending ? "asc" : "desc";
   }
+
 </script>
 </body>
 </html>
